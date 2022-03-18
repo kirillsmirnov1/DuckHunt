@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Game A
   m_EditorClassIdentifier: 
   modeName: Game A
+  modeCanvas: {fileID: 6216666923893281882, guid: cd0bfe0b069602a43b83feffd86d9d0e, type: 3}
   numberOfLevels: 10
   roundsPerLevel: 5
   bulletsPerRound: 3
