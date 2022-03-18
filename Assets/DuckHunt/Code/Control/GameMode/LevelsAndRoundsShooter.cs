@@ -21,6 +21,9 @@ namespace DuckHunt.Control.GameMode
             _view = Instantiate(modeCanvas).GetComponent<ShooterView>();
             _view.Init(this);
         }
+        
+        // TODO Level Start / End 
+        // TODO Round Start / End 
 
         public override bool ReadyToPlay 
             => targetPrefab != null;
