@@ -12,7 +12,8 @@ namespace DuckHunt.Control.GameMode
         [SerializeField] public int roundsPerLevel = 5;
         [SerializeField] private int bulletsPerRound = 3;
         [SerializeField] private int targetsPerRound = 1;
-        
+        [SerializeField] private float targetBaseSpeed = 5f;
+        [SerializeField] private float targetSpeedMod = 1.2f;
         [SerializeField] private ATarget targetPrefab;
         [SerializeField] private Rect camRect = new Rect(0, .2f, 1, .8f);
         
@@ -31,8 +32,7 @@ namespace DuckHunt.Control.GameMode
             InitView();
             InitCam();
             SpawnTargets();
-            _level = 0;
-            NextLevel();
+            NextGame();
         }
 
         private void InitView()
@@ -57,9 +57,15 @@ namespace DuckHunt.Control.GameMode
             }
         }
 
+        private void NextGame()
+        {
+            _level = 0;
+            UpdateTargetSpeed(targetBaseSpeed / targetSpeedMod);
+            NextLevel();
+        }
+
         private void NextLevel()
         {
-            // TODO increase bird speed 
             _level++;
             if (_level > numberOfLevels)
             {
@@ -67,9 +73,18 @@ namespace DuckHunt.Control.GameMode
                 return;
             }
 
+            UpdateTargetSpeed(_targets[0].Speed * targetSpeedMod);
             _round = -1;
             _view.OnLevelStart(_level);
             NextRound();
+        }
+
+        private void UpdateTargetSpeed(float speed)
+        {
+            for (int i = 0; i < _targets.Length; i++)
+            {
+                _targets[i].Speed = speed;
+            }
         }
 
         private void NextRound()

@@ -4,7 +4,7 @@ namespace DuckHunt.Control.Targets
 {
     public abstract class ATarget : MonoBehaviour
     {
-        public float Speed { get; set; } = 10;
+        public float Speed { get; set; } = 5;
 
         protected Vector2 Direction;
 
