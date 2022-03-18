@@ -13,7 +13,7 @@ namespace DuckHunt.Control.GameMode
         [SerializeField] private int bulletsPerRound = 3;
         [SerializeField] private int targetsPerRound = 1;
         
-        [SerializeField] private Target targetPrefab;
+        [SerializeField] private ATarget targetPrefab;
         
         private ShooterView _view;
         
