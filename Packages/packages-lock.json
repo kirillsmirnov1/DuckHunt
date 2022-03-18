@@ -178,6 +178,15 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "trulden.unity-utils": {
+      "version": "https://github.com/kirillsmirnov1/unity-utils.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.textmeshpro": "2.1.1"
+      },
+      "hash": "d8ca6fc918f87e75c5dac041b60e576dfd8653d4"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
