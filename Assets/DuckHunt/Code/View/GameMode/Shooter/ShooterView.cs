@@ -25,14 +25,14 @@ namespace DuckHunt.View.GameMode.Shooter
             SetPointsText(0);
         }
 
-        public void OnLevelStart()
+        public void OnLevelStart(int level)
         {
+            SetModeText(level);
             targetCounter.SetTagsMode(TargetCounter.TagMode.ToDo);
         }
 
         public void OnRoundStart(int round)
         {
-            SetModeText(round);
             targetCounter.SetTagMode(round, TargetCounter.TagMode.Current);
         }
 
