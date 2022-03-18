@@ -20,13 +20,44 @@ namespace DuckHunt.Control.GameMode
         
         public override void Start()
         {
+            InitView();
+            InitCam();
+            SpawnTargets();
+        }
+
+        private void InitView()
+        {
             _view = Instantiate(modeCanvas).GetComponent<ShooterView>();
             _view.Init(this);
-            Camera.main.rect = camRect;
         }
-        
+
+        private void InitCam()
+        {
+            _camRef = Camera.main;
+            _camRef.rect = camRect;
+        }
+
+        private void SpawnTargets()
+        {
+            _targets = new ATarget[targetsPerRound];
+            for (int i = 0; i < targetsPerRound; i++)
+            {
+                _targets[i] = Instantiate(targetPrefab);
+                _targets[i].gameObject.SetActive(false);
+            }
+        }
+
         // TODO Level Start / End 
         // TODO Round Start / End 
+        
+        public override void OnClick() // TODO extract into gun controller  
+        {
+            var collider = Physics2D.OverlapCircle(_camRef.ScreenToWorldPoint(Input.mousePosition), 1);
+            if (collider != null && collider.gameObject.TryGetComponent<ATarget>(out var target))
+            {
+                Debug.Log("birb shot");
+            }
+        }
 
         public override bool ReadyToPlay 
             => targetPrefab != null;

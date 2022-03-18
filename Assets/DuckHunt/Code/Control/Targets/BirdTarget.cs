@@ -20,6 +20,6 @@ namespace DuckHunt.Control.Targets
             => transform.Translate(Direction * Time.deltaTime * Speed);
         
         private void RandomizeDirection() 
-            => Direction = ((Vector2) (_camTransform.position - transform.position) + Random.insideUnitCircle * dirRadius).normalized;
+            => Direction = ((Vector2) (_camTransform?.position - transform.position) + Random.insideUnitCircle * dirRadius).normalized;
     }
 }

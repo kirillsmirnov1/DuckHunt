@@ -10,5 +10,6 @@ namespace DuckHunt.Control.GameMode
         public abstract void Start();
         public virtual bool ReadyToDisplay => !string.IsNullOrWhiteSpace(modeName);
         public abstract bool ReadyToPlay { get; }
+        public virtual void OnClick() { }
     }
 }

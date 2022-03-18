@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Target_Bird
       objectReference: {fileID: 0}
+    - target: {fileID: 3718531638852026839, guid: 0501d714659288f45b81f21ad75d4fbf, type: 3}
+      propertyPath: m_Radius
+      value: 0.64
+      objectReference: {fileID: 0}
     - target: {fileID: 5853484329220849845, guid: 0501d714659288f45b81f21ad75d4fbf, type: 3}
       propertyPath: m_Sprite
       value: 
