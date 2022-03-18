@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DuckHunt/Scenes/Lobby.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/DuckHunt/Scenes/Game.unity
+    guid: 89dbdc158b386dc4bac6291d40c1f563
   m_configObjects: {}
