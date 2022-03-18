@@ -2,7 +2,7 @@
 
 namespace DuckHunt.Control.GameMode
 {
-    [CreateAssetMenu(menuName = "Modes/LevelsAndRoundsShooter", fileName = "LevelsAndRoundsShooter", order = 1)]
+    [CreateAssetMenu(menuName = "Modes/LevelsAndRoundsShooter", fileName = "LevelsAndRoundsShooter", order = 10)]
     public class LevelsAndRoundsShooter : AGameMode
     {
         [SerializeField] private int numberOfLevels = 10;
