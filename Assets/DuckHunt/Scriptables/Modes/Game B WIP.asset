@@ -18,4 +18,4 @@ MonoBehaviour:
   roundsPerLevel: 5
   bulletsPerRound: 3
   targetsPerRound: 2
-  targetPrefab: {fileID: 0}
+  targetPrefab: {fileID: 67898265617215411, guid: 0501d714659288f45b81f21ad75d4fbf, type: 3}

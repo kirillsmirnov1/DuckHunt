@@ -1,4 +1,5 @@
-﻿using DuckHunt.View.GameMode.Shooter;
+﻿using DuckHunt.Control.Targets;
+using DuckHunt.View.GameMode.Shooter;
 using UnityEngine;
 
 namespace DuckHunt.Control.GameMode
@@ -12,7 +13,7 @@ namespace DuckHunt.Control.GameMode
         [SerializeField] private int bulletsPerRound = 3;
         [SerializeField] private int targetsPerRound = 1;
         
-        [SerializeField] private GameObject targetPrefab;
+        [SerializeField] private Target targetPrefab;
         
         private ShooterView _view;
         
