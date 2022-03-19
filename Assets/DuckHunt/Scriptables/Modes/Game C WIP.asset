@@ -31,3 +31,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 606d793367f88fe47b1c4afa89fc874f, type: 2}
   - {fileID: 11400000, guid: cd0b8b96b5bccf440bf21dfd9c02a799, type: 2}
   - {fileID: 11400000, guid: 2524938d39ee24c46ab4eb836a950c7f, type: 2}
+  currentWeaponVariable: {fileID: 11400000, guid: 548269636d580b040985ca73eeecf7fe, type: 2}

@@ -170,6 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e033ca2bb4ab574c87b7da6269f5e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletsText: {fileID: 3728253592071558245}
+  weaponIcon: {fileID: 4225314679327121466}
+  weaponButton: {fileID: 4134167977476323813}
+  weaponVariable: {fileID: 11400000, guid: 548269636d580b040985ca73eeecf7fe, type: 2}
 --- !u!1001 &1143047173685527895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,3 +280,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4350901353681621297, guid: 1345361ca112ab84aa5be12ee07869c2, type: 3}
   m_PrefabInstance: {fileID: 1143047173685527895}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3728253592071558245 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4350901353681621298, guid: 1345361ca112ab84aa5be12ee07869c2, type: 3}
+  m_PrefabInstance: {fileID: 1143047173685527895}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

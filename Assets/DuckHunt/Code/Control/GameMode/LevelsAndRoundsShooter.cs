@@ -19,7 +19,8 @@ namespace DuckHunt.Control.GameMode
         [SerializeField] private ATarget targetPrefab;
         [SerializeField] private Rect camRect = new Rect(0, .2f, 1, .8f);
         [SerializeField] private Weapon[] allowedWeapons;
-
+        [SerializeField] private WeaponVariable currentWeaponVariable;
+        
         private ShooterView _view;
 
         private int _level;
@@ -66,7 +67,7 @@ namespace DuckHunt.Control.GameMode
         {
             _weaponHandler = new GameObject("WeaponHandler")
                 .AddComponent<WeaponHandler>();
-            _weaponHandler.Init(allowedWeapons);
+            _weaponHandler.Init(allowedWeapons, currentWeaponVariable);
         }
 
         private void NextGame()

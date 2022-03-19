@@ -12,14 +12,21 @@ namespace DuckHunt.Control.Weapons
         private Camera _camRef;
         private Weapon[] _weapons;
         private int _iCurrentWeapon;
-        private Weapon _currentWeapon;
+        private WeaponVariable _weaponVariable;
+        private Weapon CurrentWeapon
+        {
+            get => _weaponVariable.Value;
+            set => _weaponVariable.Value = value;
+        }
+
         private ChargeView[] _chargeViews;
 
         private void Awake() 
             => _camRef = Camera.main;
 
-        public void Init(Weapon[] weapons)
+        public void Init(Weapon[] weapons, WeaponVariable weaponVariable)
         {
+            _weaponVariable = weaponVariable;
             _weapons = weapons;
             _iCurrentWeapon = 0;
             SetWeapon(weapons);
@@ -32,7 +39,7 @@ namespace DuckHunt.Control.Weapons
             _chargeViews = new ChargeView[maxCharges];
             for (int i = 0; i < maxCharges; i++)
             {
-                _chargeViews[i] = ChargeView.New(transform, i, _currentWeapon.chargeSprite);
+                _chargeViews[i] = ChargeView.New(transform, i, CurrentWeapon.chargeSprite);
             }
             DisableChargeViews();
         }
@@ -47,7 +54,7 @@ namespace DuckHunt.Control.Weapons
 
         private void SetWeapon(Weapon[] weapons)
         {
-            _currentWeapon = weapons[_iCurrentWeapon];
+            CurrentWeapon = weapons[_iCurrentWeapon];
             // TODO notify view 
         }
 
@@ -60,11 +67,11 @@ namespace DuckHunt.Control.Weapons
 
         private Vector3[] PrepareCharges()
         {
-            var charges = new Vector3[_currentWeapon.chargesPerShot];
+            var charges = new Vector3[CurrentWeapon.chargesPerShot];
             Vector2 shotCenter = _camRef.ScreenToWorldPoint(Input.mousePosition);
             for (int i = 0; i < charges.Length; i++)
             {
-                charges[i] = shotCenter + Random.insideUnitCircle * _currentWeapon.rangeRadius;
+                charges[i] = shotCenter + Random.insideUnitCircle * CurrentWeapon.rangeRadius;
             }
 
             return charges;
@@ -75,7 +82,7 @@ namespace DuckHunt.Control.Weapons
             StopAllCoroutines();
             DisableChargeViews();
 
-            var scale = Vector3.one * _currentWeapon.chargeRadius * 2;
+            var scale = Vector3.one * CurrentWeapon.chargeRadius * 2;
             
             for (int i = 0; i < charges.Length; i++)
             {
@@ -84,7 +91,7 @@ namespace DuckHunt.Control.Weapons
                 _chargeViews[i].SetActive(true);
             }
             
-            this.DelayAction(_currentWeapon.shotDuration, DisableChargeViews);
+            this.DelayAction(CurrentWeapon.shotDuration, DisableChargeViews);
         }
 
         private List<ATarget> ShootTargets(Vector3[] charges)
@@ -92,7 +99,7 @@ namespace DuckHunt.Control.Weapons
             var shotTargets = new HashSet<ATarget>();
             for (var iCharge = 0; iCharge < charges.Length; iCharge++)
             {
-                var colliders = Physics2D.OverlapCircleAll(charges[iCharge], _currentWeapon.chargeRadius);
+                var colliders = Physics2D.OverlapCircleAll(charges[iCharge], CurrentWeapon.chargeRadius);
                 for (var iCollider = 0; iCollider < colliders.Length; iCollider++)
                 {
                     if (ShotATarget(colliders[iCollider], out var target))
