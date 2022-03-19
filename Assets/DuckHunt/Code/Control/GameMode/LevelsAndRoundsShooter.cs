@@ -1,8 +1,11 @@
-﻿using DuckHunt.Control.Targets;
+﻿using System;
+using DuckHunt.Control.GameMode.ShooterStates;
+using DuckHunt.Control.Targets;
 using DuckHunt.Control.Weapons;
 using DuckHunt.Model;
 using DuckHunt.View.GameMode.Shooter;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DuckHunt.Control.GameMode
 {
@@ -20,8 +23,8 @@ namespace DuckHunt.Control.GameMode
         [SerializeField] private Rect camRect = new Rect(0, .2f, 1, .8f);
         [SerializeField] private Weapon[] allowedWeapons;
         [SerializeField] private WeaponVariable currentWeaponVariable;
-        
-        private ShooterView _view;
+
+        public ShooterView View { get; private set; }
 
         private int _level;
         private int _round;
@@ -32,6 +35,7 @@ namespace DuckHunt.Control.GameMode
         private Camera _camRef;
         private WeaponHandler _weaponHandler;
         private ATarget[] _targets;
+        private AShooterState _state;
 
         public override void Start()
         {
@@ -44,8 +48,8 @@ namespace DuckHunt.Control.GameMode
 
         private void InitView()
         {
-            _view = Instantiate(modeCanvas).GetComponent<ShooterView>();
-            _view.Init(this);
+            View = Instantiate(modeCanvas).GetComponent<ShooterView>();
+            View.Init(this);
         }
 
         private void InitCam()
@@ -77,6 +81,7 @@ namespace DuckHunt.Control.GameMode
             _points = 0;
             UpdateTargetSpeed(targetBaseSpeed / targetSpeedMod);
             NextLevel();
+            StartShootingState();
         }
 
         private void NextLevel()
@@ -84,13 +89,13 @@ namespace DuckHunt.Control.GameMode
             _level++;
             if (_level > numberOfLevels)
             {
-                OnModePassed();
+                OnGamePassed();
                 return;
             }
 
             UpdateTargetSpeed(_targets[0].Speed * targetSpeedMod);
             _round = -1;
-            _view.OnLevelStart(_level);
+            View.OnLevelStart(_level);
             NextRound();
         }
 
@@ -113,12 +118,12 @@ namespace DuckHunt.Control.GameMode
 
             _targetsShot = 0;
             _bullets = bulletsPerRound;
-            _view.UpdateBulletCount(_bullets);
-            _view.OnRoundStart(_round);
-            ReleaseTargets();
+            View.UpdateBulletCount(_bullets);
+            View.OnRoundStart(_round);
+            StartShootingState();
         }
 
-        private void ReleaseTargets()
+        public void ReleaseTargets()
         {
             for (int i = 0; i < _targets.Length; i++)
             {
@@ -127,48 +132,61 @@ namespace DuckHunt.Control.GameMode
             }
         }
 
-        private void OnLevelPassed()
-        {
-            // TODO show popup
-            NextLevel();
-        }
+        public override void OnClick() 
+            => _state.OnClick();
 
-        private void OnModePassed()
-        {
-            // TODO 
-            Debug.Log("Mode passed");
-        }
-        
-        public override void OnClick()   
+        public void Shoot()
         {
             var targetsShot = _weaponHandler.Shoot();
             for (int i = 0; i < targetsShot.Count; i++)
             {
                 targetsShot[i].gameObject.SetActive(false);
             }
-            
+
             _targetsShot += targetsShot.Count;
             _bullets--;
-            _view.UpdateBulletCount(_bullets);
+            View.UpdateBulletCount(_bullets);
 
             if (_targetsShot >= targetsPerRound)
             {
-                EndRound(true);
+                OnRoundPassed(true);
             }
             else if (_bullets <= 0)
             {
-                EndRound(false);
+                OnRoundPassed(false);
             }
         }
 
-        private void EndRound(bool success)
+        private void OnRoundPassed(bool success)
         {
-            _points += _targetsShot * 100 + _bullets * 50; // TODO extract PointsSO 
-            _view.OnRoundResult(_round, success, _points);
-            NextRound();
+            var roundPoints = _targetsShot * 100 + _bullets * 50; // TODO extract PointsSO 
+            _points += roundPoints;  
+            View.OnRoundResult(_round, success, _points);
+            var roundText = $"Round {(success ? "won" : "lost")}\n\n score +{roundPoints}";
+            StartPopupState(roundText, NextRound);
+        }
+
+        private void OnLevelPassed()
+        {
+            // TODO fail level
+            StartPopupState("Level done!", NextLevel);
+        }
+
+        private void OnGamePassed()
+        {
+            // TODO win/lose game 
+            StartPopupState("Game over", null, false);
         }
 
         public override bool ReadyToPlay 
             => targetPrefab != null;
+
+        private void StartPopupState(string roundText, Action endCallback, bool switchBack = true)
+        {
+            _state = new PopUp(this, roundText, endCallback, switchBack);
+        }
+
+        public void StartShootingState() 
+            => _state = new Shooting(this);
     }
 }

@@ -26,7 +26,7 @@ namespace DuckHunt.View.GameMode.Shooter
         {
             _mode = levelsAndRoundsShooter;
             targetCounter.Init(_mode.roundsPerLevel); // TODO pass icon 
-            popUpPanel.SetActive(false);
+            HidePopUp();
             SetModeText(0);
             SetPointsText(0);
         }
@@ -60,5 +60,14 @@ namespace DuckHunt.View.GameMode.Shooter
 
         public void UpdateBulletCount(int bullets) 
             => weaponView.UpdateBulletCount(bullets);
+
+        public void ShowPopup(string popupText)
+        {
+            popUpText.text = popupText;
+            popUpPanel.SetActive(true);
+        }
+
+        public void HidePopUp() 
+            => popUpPanel.SetActive(false);
     }
 }
