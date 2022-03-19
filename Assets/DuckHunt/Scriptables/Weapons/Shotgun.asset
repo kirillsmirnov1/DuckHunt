@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   chargesPerShot: 6
-  chargeRadius: 0.1
-  rangeRadius: 0.5
+  chargeRadius: 0.25
+  rangeRadius: 1
+  shotDuration: 0.3
   weaponIcon: {fileID: 21300000, guid: 9265b0ae40846dd45a3d903b1fc60f67, type: 3}
   chargeSprite: {fileID: 21300000, guid: 99d13eaf1a5087b408d53fb6da7847b5, type: 3}

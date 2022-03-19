@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RPG
   m_EditorClassIdentifier: 
   chargesPerShot: 1
-  chargeRadius: 0.5
+  chargeRadius: 0.7
   rangeRadius: 0
+  shotDuration: 0.3
   weaponIcon: {fileID: 21300000, guid: 50c240c9fa3ded4489268a7fc574620f, type: 3}
   chargeSprite: {fileID: 21300000, guid: 99d13eaf1a5087b408d53fb6da7847b5, type: 3}

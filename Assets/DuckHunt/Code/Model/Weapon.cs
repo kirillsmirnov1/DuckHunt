@@ -9,6 +9,7 @@ namespace DuckHunt.Model
         public int chargesPerShot = 1;
         public float chargeRadius = .5f;
         public float rangeRadius = 0f;
+        public float shotDuration = .3f;
 
         [Header("Sprites")]
         public Sprite weaponIcon;
