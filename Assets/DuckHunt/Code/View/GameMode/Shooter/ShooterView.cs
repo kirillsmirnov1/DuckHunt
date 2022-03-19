@@ -8,8 +8,11 @@ namespace DuckHunt.View.GameMode.Shooter
     {
         [SerializeField] private TargetCounter targetCounter;
         [SerializeField] private WeaponView weaponView;
+        [SerializeField] private GameObject popUpPanel;
+        
         [SerializeField] private Text modeText;
         [SerializeField] private Text pointsText;
+        [SerializeField] private Text popUpText;
         
         private LevelsAndRoundsShooter _mode;
 
@@ -23,6 +26,7 @@ namespace DuckHunt.View.GameMode.Shooter
         {
             _mode = levelsAndRoundsShooter;
             targetCounter.Init(_mode.roundsPerLevel); // TODO pass icon 
+            popUpPanel.SetActive(false);
             SetModeText(0);
             SetPointsText(0);
         }
