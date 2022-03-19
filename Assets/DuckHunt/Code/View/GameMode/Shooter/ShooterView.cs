@@ -42,9 +42,10 @@ namespace DuckHunt.View.GameMode.Shooter
             targetCounter.SetTagMode(round, TargetCounter.TagMode.Current);
         }
 
-        public void OnRoundResult(int round, bool result)
+        public void OnRoundResult(int round, bool result, int points)
         {
             targetCounter.SetTagMode(round, result ? TargetCounter.TagMode.Done : TargetCounter.TagMode.Failed);
+            SetPointsText(points);
         }
 
         private void SetModeText(int round)

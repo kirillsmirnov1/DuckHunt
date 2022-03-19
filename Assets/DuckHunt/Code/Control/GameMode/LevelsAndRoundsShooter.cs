@@ -27,6 +27,7 @@ namespace DuckHunt.Control.GameMode
         private int _round;
         private int _bullets;
         private int _targetsShot;
+        private int _points;
         
         private Camera _camRef;
         private WeaponHandler _weaponHandler;
@@ -73,6 +74,7 @@ namespace DuckHunt.Control.GameMode
         private void NextGame()
         {
             _level = 0;
+            _points = 0;
             UpdateTargetSpeed(targetBaseSpeed / targetSpeedMod);
             NextLevel();
         }
@@ -161,7 +163,8 @@ namespace DuckHunt.Control.GameMode
 
         private void EndRound(bool success)
         {
-            _view.OnRoundResult(_round, success);
+            _points += _targetsShot * 100 + _bullets * 50; // TODO extract PointsSO 
+            _view.OnRoundResult(_round, success, _points);
             NextRound();
         }
 
