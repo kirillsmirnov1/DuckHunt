@@ -13,8 +13,6 @@ namespace DuckHunt.Control.Weapons
 
         public List<ATarget> Shoot()
         {
-            // TODO extract into gun controller
-            // TODO count targets
             var shotTargets = new List<ATarget>();
             
             var colliders = Physics2D.OverlapCircleAll(_camRef.ScreenToWorldPoint(Input.mousePosition), 1);
