@@ -18,4 +18,16 @@ MonoBehaviour:
   roundsPerLevel: 5
   bulletsPerRound: 3
   targetsPerRound: 1
+  targetBaseSpeed: 5
+  targetSpeedMod: 1.2
   targetPrefab: {fileID: 0}
+  camRect:
+    serializedVersion: 2
+    x: 0
+    y: 0.2
+    width: 1
+    height: 0.8
+  allowedWeapons:
+  - {fileID: 11400000, guid: 606d793367f88fe47b1c4afa89fc874f, type: 2}
+  - {fileID: 11400000, guid: cd0b8b96b5bccf440bf21dfd9c02a799, type: 2}
+  - {fileID: 11400000, guid: 2524938d39ee24c46ab4eb836a950c7f, type: 2}

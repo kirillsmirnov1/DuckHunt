@@ -1,5 +1,6 @@
 ﻿using DuckHunt.Control.Targets;
 using DuckHunt.Control.Weapons;
+using DuckHunt.Model;
 using DuckHunt.View.GameMode.Shooter;
 using UnityEngine;
 
@@ -17,7 +18,8 @@ namespace DuckHunt.Control.GameMode
         [SerializeField] private float targetSpeedMod = 1.2f;
         [SerializeField] private ATarget targetPrefab;
         [SerializeField] private Rect camRect = new Rect(0, .2f, 1, .8f);
-        
+        [SerializeField] private Weapon[] allowedWeapons;
+
         private ShooterView _view;
 
         private int _level;
@@ -33,8 +35,8 @@ namespace DuckHunt.Control.GameMode
         {
             InitView();
             InitCam();
-            SpawnTargets();
             InitWeaponHandler();
+            SpawnTargets();
             NextGame();
         }
 
@@ -64,6 +66,7 @@ namespace DuckHunt.Control.GameMode
         {
             _weaponHandler = new GameObject("WeaponHandler")
                 .AddComponent<WeaponHandler>();
+            _weaponHandler.Init(allowedWeapons);
         }
 
         private void NextGame()
