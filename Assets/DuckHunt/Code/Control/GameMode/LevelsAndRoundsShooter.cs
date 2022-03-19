@@ -1,4 +1,5 @@
 ﻿using DuckHunt.Control.Targets;
+using DuckHunt.Control.Weapons;
 using DuckHunt.View.GameMode.Shooter;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace DuckHunt.Control.GameMode
         private int _targetsShot;
         
         private Camera _camRef;
+        private WeaponHandler _weaponHandler;
         private ATarget[] _targets;
 
         public override void Start()
@@ -32,6 +34,7 @@ namespace DuckHunt.Control.GameMode
             InitView();
             InitCam();
             SpawnTargets();
+            InitWeaponHandler();
             NextGame();
         }
 
@@ -55,6 +58,12 @@ namespace DuckHunt.Control.GameMode
                 _targets[i] = Instantiate(targetPrefab);
                 _targets[i].gameObject.SetActive(false);
             }
+        }
+
+        private void InitWeaponHandler()
+        {
+            _weaponHandler = new GameObject("WeaponHandler")
+                .AddComponent<WeaponHandler>();
         }
 
         private void NextGame()
@@ -122,14 +131,15 @@ namespace DuckHunt.Control.GameMode
             // TODO 
             Debug.Log("Mode passed");
         }
-
-        // TODO Level Start / End 
-        // TODO Round Start / End 
         
         public override void OnClick()   
         {
-            var targetsShot = Shoot();
-            _targetsShot += targetsShot;
+            var targetsShot = _weaponHandler.Shoot();
+            for (int i = 0; i < targetsShot.Count; i++)
+            {
+                targetsShot[i].gameObject.SetActive(false);
+            }
+            _targetsShot += targetsShot.Count;
             _bullets--;
             
             Debug.Log($"bullets left : {_bullets}");
@@ -148,19 +158,6 @@ namespace DuckHunt.Control.GameMode
         {
             _view.OnRoundResult(_round, success);
             NextRound();
-        }
-
-        private int Shoot()
-        {
-            // TODO extract into gun controller
-            // TODO count targets
-            var collider = Physics2D.OverlapCircle(_camRef.ScreenToWorldPoint(Input.mousePosition), 1);
-            if (collider != null && collider.gameObject.TryGetComponent<ATarget>(out var target))
-            {
-                Debug.Log("birb shot");
-                return 1;
-            }
-            return 0;
         }
 
         public override bool ReadyToPlay 
