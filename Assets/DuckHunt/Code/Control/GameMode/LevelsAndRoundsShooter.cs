@@ -107,6 +107,7 @@ namespace DuckHunt.Control.GameMode
 
             _targetsShot = 0;
             _bullets = bulletsPerRound;
+            _view.UpdateBulletCount(_bullets);
             _view.OnRoundStart(_round);
             ReleaseTargets();
         }
@@ -139,11 +140,11 @@ namespace DuckHunt.Control.GameMode
             {
                 targetsShot[i].gameObject.SetActive(false);
             }
+            
             _targetsShot += targetsShot.Count;
             _bullets--;
-            
-            Debug.Log($"bullets left : {_bullets}");
-            
+            _view.UpdateBulletCount(_bullets);
+
             if (_targetsShot >= targetsPerRound)
             {
                 EndRound(true);

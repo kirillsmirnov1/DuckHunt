@@ -15,5 +15,8 @@ namespace DuckHunt.View.GameMode.Shooter
             weaponIcon ??= GetComponentInChildren<Image>();
             weaponButton ??= GetComponentInChildren<Button>();
         }
+
+        public void UpdateBulletCount(int bullets) 
+            => bulletsText.text = bullets.ToString();
     }
 }

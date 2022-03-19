@@ -52,5 +52,8 @@ namespace DuckHunt.View.GameMode.Shooter
         {
             pointsText.text = $"Score : {points}";
         }
+
+        public void UpdateBulletCount(int bullets) 
+            => weaponView.UpdateBulletCount(bullets);
     }
 }
