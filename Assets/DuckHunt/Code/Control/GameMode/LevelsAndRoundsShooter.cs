@@ -5,6 +5,7 @@ using DuckHunt.Control.Weapons;
 using DuckHunt.Model;
 using DuckHunt.View.GameMode.Shooter;
 using UnityEngine;
+using UnityUtils.Extensions;
 using Random = UnityEngine.Random;
 
 namespace DuckHunt.Control.GameMode
@@ -137,7 +138,7 @@ namespace DuckHunt.Control.GameMode
         }
 
         public override void OnClick() 
-            => _state.OnClick();
+            => _state?.OnClick();
 
         public void Shoot()
         {
@@ -190,7 +191,9 @@ namespace DuckHunt.Control.GameMode
 
         private void StartPopupState(string roundText, Action endCallback, bool switchBack = true)
         {
-            _state = new PopUp(this, roundText, endCallback, switchBack);
+            _state = null;
+            View.DelayAction(.3f, () =>
+                _state = new PopUp(this, roundText, endCallback, switchBack));
         }
 
         public void StartShootingState() 
