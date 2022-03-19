@@ -38,6 +38,7 @@ namespace DuckHunt.Control.GameMode
         private WeaponHandler _weaponHandler;
         private ATarget[] _targets;
         private AShooterState _state;
+        private bool _lastLevelWon;
 
         public override void Start()
         {
@@ -172,14 +173,16 @@ namespace DuckHunt.Control.GameMode
 
         private void OnLevelPassed()
         {
-            var levelWon = _failedRounds <= allowedFailedRounds;
-            StartPopupState($"Level {(levelWon ? "won" : "lost")}", levelWon ? (Action) NextLevel : OnGamePassed);
+            _lastLevelWon = _failedRounds <= allowedFailedRounds;
+            StartPopupState($"Level {(_lastLevelWon ? "won" : "lost")}", _lastLevelWon ? (Action) NextLevel : OnGamePassed);
         }
 
         private void OnGamePassed()
         {
-            // TODO win/lose game 
-            StartPopupState("Game over", null, false);
+            var pointsStr = $"score : {_points}";
+            StartPopupState(_lastLevelWon 
+                ? $"You won the game!\n\n{pointsStr}" 
+                : $"Game over\n\nYou lost\n\n{pointsStr}", null, false);
         }
 
         public override bool ReadyToPlay 
