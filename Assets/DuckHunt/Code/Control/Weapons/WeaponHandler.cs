@@ -2,8 +2,10 @@
 using System.Linq;
 using DuckHunt.Control.Targets;
 using DuckHunt.Model;
+using DuckHunt.View.GameMode.Shooter;
 using UnityEngine;
 using UnityUtils.Extensions;
+using Random = UnityEngine.Random;
 
 namespace DuckHunt.Control.Weapons
 {
@@ -21,15 +23,21 @@ namespace DuckHunt.Control.Weapons
 
         private ChargeView[] _chargeViews;
 
-        private void Awake() 
-            => _camRef = Camera.main;
+        private void Awake()
+        {
+            _camRef = Camera.main;
+            WeaponView.OnChangeWeaponRequest += IterateWeapon;
+        }
+
+        private void OnDestroy() 
+            => WeaponView.OnChangeWeaponRequest -= IterateWeapon;
 
         public void Init(Weapon[] weapons, WeaponVariable weaponVariable)
         {
             _weaponVariable = weaponVariable;
             _weapons = weapons;
             _iCurrentWeapon = 0;
-            SetWeapon(weapons);
+            SetWeapon(_iCurrentWeapon);
             InitChargeViews();
         }
 
@@ -52,11 +60,14 @@ namespace DuckHunt.Control.Weapons
             }
         }
 
-        private void SetWeapon(Weapon[] weapons)
+        private void IterateWeapon()
         {
-            CurrentWeapon = weapons[_iCurrentWeapon];
-            // TODO notify view 
+            _iCurrentWeapon = (_iCurrentWeapon + 1) % _weapons.Length;
+            SetWeapon(_iCurrentWeapon);
         }
+
+        private void SetWeapon(int weapon) 
+            => CurrentWeapon = _weapons[weapon];
 
         public List<ATarget> Shoot()
         {

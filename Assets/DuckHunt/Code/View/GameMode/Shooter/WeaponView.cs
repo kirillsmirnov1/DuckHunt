@@ -7,6 +7,8 @@ namespace DuckHunt.View.GameMode.Shooter
 {
     public class WeaponView : MonoBehaviour
     {
+        public static event Action OnChangeWeaponRequest;
+        
         [SerializeField] private Text bulletsText;
         [SerializeField] private Image weaponIcon;
         [SerializeField] private Button weaponButton;
@@ -24,6 +26,7 @@ namespace DuckHunt.View.GameMode.Shooter
         private void Awake()
         {
             weaponVariable.OnChange += SetWeaponIcon;
+            weaponButton.onClick.AddListener(() => OnChangeWeaponRequest?.Invoke());
         }
 
         private void Start()
