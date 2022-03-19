@@ -5,6 +5,7 @@ namespace DuckHunt.Utils
 {
     public static class SOUtils // TODO move to UU
     {
+#if UNITY_EDITOR
         public static T[] GetAllInstances<T>() where T : ScriptableObject
         {
             string[] guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);  //FindAssets uses tags check documentation for more info
@@ -18,6 +19,6 @@ namespace DuckHunt.Utils
             return a;
  
         }
-        
+#endif
     }
 }
