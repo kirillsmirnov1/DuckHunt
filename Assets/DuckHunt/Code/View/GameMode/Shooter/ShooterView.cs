@@ -7,6 +7,7 @@ namespace DuckHunt.View.GameMode.Shooter
     public class ShooterView : MonoBehaviour
     {
         [SerializeField] private TargetCounter targetCounter;
+        [SerializeField] private WeaponView weaponView;
         [SerializeField] private Text modeText;
         [SerializeField] private Text pointsText;
         
@@ -15,6 +16,7 @@ namespace DuckHunt.View.GameMode.Shooter
         private void OnValidate()
         {
             targetCounter ??= GetComponentInChildren<TargetCounter>();
+            weaponView ??= GetComponentInChildren<WeaponView>();
         }
 
         public void Init(LevelsAndRoundsShooter levelsAndRoundsShooter)
