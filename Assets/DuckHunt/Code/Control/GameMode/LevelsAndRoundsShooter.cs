@@ -15,6 +15,7 @@ namespace DuckHunt.Control.GameMode
         [Header("Shooter")]
         [SerializeField] private int numberOfLevels = 10;
         [SerializeField] public int roundsPerLevel = 5;
+        [SerializeField] private int allowedFailedRounds = 1;
         [SerializeField] private int bulletsPerRound = 3;
         [SerializeField] private int targetsPerRound = 1;
         [SerializeField] private float targetBaseSpeed = 5f;
@@ -31,6 +32,7 @@ namespace DuckHunt.Control.GameMode
         private int _bullets;
         private int _targetsShot;
         private int _points;
+        private int _failedRounds;
         
         private Camera _camRef;
         private WeaponHandler _weaponHandler;
@@ -93,6 +95,7 @@ namespace DuckHunt.Control.GameMode
                 return;
             }
 
+            _failedRounds = 0;
             UpdateTargetSpeed(_targets[0].Speed * targetSpeedMod);
             _round = -1;
             View.OnLevelStart(_level);
@@ -159,6 +162,7 @@ namespace DuckHunt.Control.GameMode
 
         private void OnRoundPassed(bool success)
         {
+            if (!success) _failedRounds++;
             var roundPoints = _targetsShot * 100 + _bullets * 50; // TODO extract PointsSO 
             _points += roundPoints;  
             View.OnRoundResult(_round, success, _points);
@@ -168,8 +172,8 @@ namespace DuckHunt.Control.GameMode
 
         private void OnLevelPassed()
         {
-            // TODO fail level
-            StartPopupState("Level done!", NextLevel);
+            var levelWon = _failedRounds <= allowedFailedRounds;
+            StartPopupState($"Level {(levelWon ? "won" : "lost")}", levelWon ? (Action) NextLevel : OnGamePassed);
         }
 
         private void OnGamePassed()
