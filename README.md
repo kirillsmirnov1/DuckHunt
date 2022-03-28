@@ -1,5 +1,7 @@
 This is a test task for some company.
 
+![](https://raw.githubusercontent.com/kirillsmirnov1/dump/main/duckhunt.gif)
+
 [Playable build](https://kiirusha95.itch.io/duckhunt)
 
 Task:
